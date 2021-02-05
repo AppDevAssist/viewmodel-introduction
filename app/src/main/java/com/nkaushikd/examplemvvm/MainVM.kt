@@ -1,12 +1,18 @@
 package com.nkaushikd.examplemvvm
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainVM(initialValue: Int) : ViewModel() {
-    private var counter = 0
+    private var _counter = MutableLiveData<Int>()
+    val imageUrl = "https://cdn.pixabay.com/photo/2021/01/23/13/01/hills-5942468_1280.jpg"
+
+    val counter: LiveData<Int>
+        get() = _counter
 
     init {
-        counter = initialValue
+        _counter.value = initialValue
     }
 
     override fun onCleared() {
@@ -14,14 +20,10 @@ class MainVM(initialValue: Int) : ViewModel() {
     }
 
     fun decrementValue(){
-        counter--
+        _counter.value = _counter.value?.minus(1)
     }
 
     fun incrementValue(){
-        counter++
-    }
-
-    fun getCounter(): Int {
-        return counter
+        _counter.value = _counter.value?.plus(1)
     }
 }
